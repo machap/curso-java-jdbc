@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.caelum.jdbc.modelo.Categoria;
 import br.com.caelum.jdbc.modelo.Produto;
 
 public class ProdutoDAO {
@@ -38,25 +39,43 @@ public class ProdutoDAO {
 
 	public List<Produto> lista() throws SQLException {
 		List<Produto> produtos = new ArrayList<>();
-		
+
 		String sql = "select * from Produto";
 
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.execute();
-            try (ResultSet rs = stmt.getResultSet()) {
+		try (PreparedStatement stmt = con.prepareStatement(sql)) {
+			stmt.execute();
+			transformaResultadoEmProdutos(stmt, produtos);
+		}
+		return produtos;
+	}
 
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String nome = rs.getString("nome");
-                    String descricao = rs.getString("descricao");
-                    
-                	Produto produto = new Produto(nome, descricao);
-                	produto.setId(id);
-                	
-                    produtos.add(produto);
-                }
-            }
-        }
+	private void transformaResultadoEmProdutos(PreparedStatement stmt, List<Produto> produtos) throws SQLException {
+		try (ResultSet rs = stmt.getResultSet()) {
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String nome = rs.getString("nome");
+				String descricao = rs.getString("descricao");
+
+				Produto produto = new Produto(nome, descricao);
+				produto.setId(id);
+
+				produtos.add(produto);
+			}
+		}
+	}
+
+	public List<Produto> busca(Categoria categoria) throws SQLException {
+		List<Produto> produtos = new ArrayList<>();
+		String sql = "select * from Produto where categoria_id = ?";
+
+		try (PreparedStatement stmt = con.prepareStatement(sql)) {
+			stmt.setInt(1, categoria.getId());
+			stmt.execute();
+
+			transformaResultadoEmProdutos(stmt, produtos);
+
+		}
 		return produtos;
 	}
 }
