@@ -21,11 +21,12 @@ public class ProdutoDAO {
 
 	public void salva(Produto produto) throws SQLException {
 
-		String sql = "insert into Produto (nome, descricao) values(?, ?)";
+		String sql = "insert into Produto (nome, descricao, categoria_id) values(?, ?, ?)";
 
 		try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			stmt.setString(1, produto.getNome());
 			stmt.setString(2, produto.getDescricao());
+			stmt.setInt(3, produto.getCategoria());
 			stmt.execute();
 
 			try (ResultSet rs = stmt.getGeneratedKeys()) {
