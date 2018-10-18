@@ -1,4 +1,4 @@
-package br.com.caelum.jdbc;
+package br.com.caelum.jdbc.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

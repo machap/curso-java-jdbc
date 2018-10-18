@@ -1,9 +1,11 @@
-package br.com.caelum.jdbc;
+package br.com.caelum.jdbc.teste;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import br.com.caelum.jdbc.banco.ConnectionPool;
 
 public class TestaListagem {
 

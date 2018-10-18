@@ -1,9 +1,10 @@
+package br.com.caelum.jdbc.teste;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import br.com.caelum.jdbc.ConnectionPool;
-import br.com.caelum.jdbc.ProdutoDAO;
+import br.com.caelum.jdbc.banco.ConnectionPool;
+import br.com.caelum.jdbc.dao.ProdutoDAO;
 import br.com.caelum.jdbc.modelo.Produto;
 
 public class TestaInsercaoProduto {
